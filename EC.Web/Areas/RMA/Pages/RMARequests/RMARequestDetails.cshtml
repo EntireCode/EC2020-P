@@ -1,0 +1,111 @@
+﻿@page
+@model RMARequestDetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<h4>RMA Request</h4>
+<hr />
+<form method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RMARequest.Id" class="control-label"></label>
+                <input asp-for="RMARequest.Id" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.SubmittedDate" class="control-label"></label>
+                <input asp-for="RMARequest.SubmittedDate" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.SubmittedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerName" class="control-label"></label>
+                <input asp-for="RMARequest.CustomerName" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.CustomerName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerContactEmail" class="control-label"></label>
+                <input asp-for="RMARequest.CustomerContactEmail" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.CustomerContactEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.DefectPhenomenon" class="control-label"></label>
+                <input asp-for="RMARequest.DefectPhenomenon" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.DefectPhenomenon" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.RMANumber" class="control-label"></label>
+                <input asp-for="RMARequest.RMANumber" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.RMANumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.Status" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMARequest.Status, Model.RMAStatuses, new { @class = "form-control", @disabled = "" })
+                <span asp-validation-for="RMARequest.Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.RMAReport" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMARequest.RMAReport, Model.RMAReports, new { @class = "form-control", @disabled = "", @id = "RMAReport" })
+                <span asp-validation-for="RMARequest.RMAReport" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RMARequest.SubmittedByUser.Email" class="control-label"></label>
+                <input asp-for="RMARequest.SubmittedByUser.Email" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.SubmittedByUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerERPId" class="control-label"></label>
+                <input asp-for="RMARequest.CustomerERPId" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.CustomerERPId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerContact" class="control-label"></label>
+                <input asp-for="RMARequest.CustomerContact" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.CustomerContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.InvoiceNumber" class="control-label"></label>
+                <input asp-for="RMARequest.InvoiceNumber" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.InvoiceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sales Person</label>
+                <select class="form-control" asp-for="RMARequest.SalesPersonUserId" asp-items="@Model.SalesPersons" disabled>
+                    <option value="">Pick one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.RMAIssueDate" class="control-label"></label>
+                <input asp-for="RMARequest.RMAIssueDate" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.RMAIssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.Remark" class="control-label"></label>
+                <input asp-for="RMARequest.Remark" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.RMAClosedDate" class="control-label"></label>
+                <input id="Remark" asp-for="RMARequest.RMAClosedDate" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.RMAClosedDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-page="./RMARequestEdit" asp-route-id="@Model.RMARequest.Id">Edit</a> |
+    <a asp-page="./RMARequestsIndex">Back to List</a>
+</div>

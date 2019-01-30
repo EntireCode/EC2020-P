@@ -1,0 +1,90 @@
+﻿@page
+@model DemoCreateModel
+<h4>@ViewData["Title"]</h4>
+@Html.Partial("_StatusMessage", Model.StatusMessage)
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label asp-for="Input.Id"></label>
+                <input asp-for="Input.Id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.OrderDate"></label>
+                <input asp-for="Input.OrderDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Customer"></label>
+                <input asp-for="Input.Customer" class="form-control" />
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="file" id="fUpload" multiple asp-for="Files" />
+                </div>
+            </div>
+            <div id="output" style="min-height: 200px; white-space: pre; border: 1px solid black;"
+                 ondragenter="event.stopPropagation(); event.preventDefault();"
+                 ondragover="event.stopPropagation(); event.preventDefault();"
+                 ondrop="event.stopPropagation(); event.preventDefault(); onDrop(event);">
+                DROP FILES HERE FROM FINDER OR EXPLORER
+            </div>
+            <div id="orderDetails">
+                @Html.Partial("_OrderDetailsView")
+            </div>
+            <div id="orderAttachments">
+                @Html.Partial("_AttachmentsView")
+            </div>
+            <button type="submit" class="btn btn-outline-primary btn-sm">Save</button>
+        </form>
+    </div>
+
+</div>
+@section Scripts {
+    <script>
+        var formData = new FormData();
+        var index = 0;
+
+        function onDrop(event) {
+            var pfiles = $('#fUpload').prop("files");
+            var fdata = new FormData();
+
+            var dt = event.dataTransfer;
+            var files = dt.files;
+
+            for (var i = 0; i < files.length; i++) {
+                fdata.append("files", files[i]);
+            }
+
+            console.log(files);
+            $.ajax({
+                type: "POST",
+                url: "/Test?handler=UploadFilesAjax",
+                processData: false,
+                contentType: false,
+                //cache: false,
+                //enctype: 'multipart/form-data',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: fdata,
+                success: function (response) {
+                    $('#fileNames').html(response);
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+
+        function output(text) {
+            document.getElementById("output").textContent += text;
+            console.dir(Array.from(formData));
+        }
+
+
+    </script>
+}

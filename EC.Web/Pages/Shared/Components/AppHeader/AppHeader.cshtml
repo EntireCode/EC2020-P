@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+<header class="app-header navbar">
+    @if (User.IsInRole("admin"))
+    {
+        <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    }
+    else
+    {
+        <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button" hidden>
+            <span class="navbar-toggler-icon" hidden></span>
+        </button>
+    }
+    <a class="navbar-brand" href="/"></a>
+    @if (User.IsInRole("admin"))
+    {
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    }
+    else
+    {
+        <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" hidden>
+            <span class="navbar-toggler-icon" hidden></span>
+        </button>
+    }
+    <!-- Embed Application Menu -->
+    @await Component.InvokeAsync("ApplicationMenus", "Application")
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <ul class="nav navbar-nav ml-auto">
+            @await Component.InvokeAsync("UserNav")
+        </ul>
+        <button class="navbar-toggler aside-menu-toggler" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    }
+    else
+    {
+        <ul class="nav navbar-nav mr-5">
+            <li class="nav-item"><a asp-area="Identity" asp-page="/Account/Register" class="nav-link">Register | </a></li>
+            <li class="nav-item"><a asp-area="Identity" asp-page="/Account/Login" class="nav-link">Login</a></li>
+        </ul>
+    }
+    <!-- /remove:seed -->
+</header>

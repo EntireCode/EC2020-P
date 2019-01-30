@@ -1,0 +1,221 @@
+﻿@page
+@model ApplicationUsersIndexModel
+@{
+    ViewData["Title"] = "Application Users Page";
+}
+<h2>Application Users List</h2>
+<p>
+    <a asp-page="ApplicationUsersCreate">Create New</a>
+</p>
+<table id="example" class="table table-striped table-hover table-bordered dt-responsive nowrap">
+    <thead class="black white-text">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].CreatedDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].EmailConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Users[0].AssignedRoles)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Users)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <label class="switch switch-pill switch-text switch-primary">
+                        <input type="checkbox" class="switch-input" @(Html.Raw(item.EmailConfirmed ? "checked=\" checked\"" : ""))>
+                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                        <span class="switch-handle"></span>
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssignedRoles)
+                </td>
+                <td>
+                    <a asp-page="./ApplicationUsersEdit" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-pencil icons font-sm d-block mt-sm-2"></i></a>
+                    <a asp-page="./ApplicationUsersDetails" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-magnifier icons font-sm d-block mt-sm-2"></i></a>
+                    <a asp-page="./ApplicationUsersDelete" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-trash icons font-sm d-block mt-sm-2"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        var idioma =
+        {
+            "sProcessing": "Processing...",
+            "sLengthMenu": "To show _MENU_ registros",
+            "sZeroRecords": "No results found",
+            "sEmptyTable": "No data available in this table",
+            "sInfo": "Showing records from _START_ to _END_ of a total of _TOTAL_ records",
+            "sInfoEmpty": "Showing records from 0 to 0 of a total of 0 records",
+            "sInfoFiltered": "(filtering a total of _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Search for:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Loading...",
+            "oPaginate": {
+                "sFirst": "First",
+                "sLast": "Last",
+                "sNext": "Next",
+                "sPrevious": "Previous"
+            },
+            "oAria": {
+                "sSortAscending": ": Sort as ascending",
+                "sSortDescending": ": Sort as descending order"
+            },
+            "buttons": {
+                "copyTitle": 'Copied information',
+                "copyKeys": 'Use your keyboard or menu to select the copy command',
+                "copySuccess": {
+                    "_": '%d rows copied to clipboard',
+                    "1": '1 row copied to clipboard'
+                },
+
+                "pageLength": {
+                    "_": "To show %d rows",
+                    "-1": "Show everything"
+                }
+            }
+        };
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "language": idioma,
+                "lengthMenu": [[5, 10, 20, -1], [5, 10, 50, "Show everything"]],
+                dom: 'Bfrt<"col-md-6 inline"i> <"col-md-6 inline"p>',
+                buttons: {
+                    dom: {
+                        container: {
+                            tag: 'div',
+                            className: 'flexcontent'
+                        },
+                        buttonLiner: {
+                            tag: null
+                        }
+                    },
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            text: '<i class="fa fa-clipboard"></i>Copy',
+                            title: 'Copy table title',
+                            titleAttr: 'Copy',
+                            className: 'btn btn-app export barras',
+                            exportOptions: {
+                                columns: [0, 1]
+                            }
+                        },
+
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fa fa-file-pdf-o"></i>PDF',
+                            title: 'Table title in pdf',
+                            titleAttr: 'PDF',
+                            className: 'btn btn-app export pdf',
+                            exportOptions: {
+                                columns: [0, 1]
+                            },
+                            customize: function (doc) {
+
+                                doc.styles.title = {
+                                    color: '#4c8aa0',
+                                    fontSize: '30',
+                                    alignment: 'center'
+                                }
+                                doc.styles['td:nth-child(2)'] = {
+                                    width: '100px',
+                                    'max-width': '100px'
+                                },
+                                    doc.styles.tableHeader = {
+                                        fillColor: '#4c8aa0',
+                                        color: 'white',
+                                        alignment: 'center'
+                                    },
+                                    doc.content[1].margin = [100, 0, 100, 0]
+
+                            }
+
+                        },
+
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i>Excel',
+                            title: 'Title of table in excel',
+                            titleAttr: 'Excel',
+                            className: 'btn btn-app export excel',
+                            exportOptions: {
+                                columns: [0, 1]
+                            },
+                        },
+                        {
+                            extend: 'csvHtml5',
+                            text: '<i class="fa fa-file-text-o"></i>CSV',
+                            title: 'Table title in CSV',
+                            titleAttr: 'CSV',
+                            className: 'btn btn-app export csv',
+                            exportOptions: {
+                                columns: [0, 1]
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa fa-print"></i>Print',
+                            title: 'Title of table in print',
+                            titleAttr: 'Imprimir',
+                            className: 'btn btn-app export imprimir',
+                            exportOptions: {
+                                columns: [0, 1]
+                            }
+                        },
+                        {
+                            extend: 'pageLength',
+                            titleAttr: 'Records to show',
+                            className: 'selectTable'
+                        }
+                    ]
+
+
+                }
+            });
+        });
+    </script>   
+}

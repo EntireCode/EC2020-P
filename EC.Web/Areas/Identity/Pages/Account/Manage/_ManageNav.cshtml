@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using EC.Web.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="nav flex-column">
+    <li class="@ManageNavPages.IndexNavClass(ViewContext)" style="@ManageNavPages.IndexNavStyle(ViewContext)">
+        <a asp-page="./Index" style="font-size:20px;@ManageNavPages.IndexNavStyle(ViewContext)">Profile</a>
+    </li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)" style="@ManageNavPages.ChangePasswordNavStyle(ViewContext)">
+        <a asp-page="./ChangePassword" style="font-size:20px;@ManageNavPages.ChangePasswordNavStyle(ViewContext)">Password</a>
+    </li>
+    <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)" style="@ManageNavPages.ExternalLoginsNavStyle(ViewContext)">
+        @if (hasExternalLogins)
+        {
+            <a asp-page="./ExternalLogins" style="font-size:20px;@ManageNavPages.ExternalLoginsNavStyle(ViewContext)">External logins</a>
+        }
+    </li>
+    <li class="@ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" style="@ManageNavPages.TwoFactorAuthenticationNavStyle(ViewContext)">
+        <a asp-page="./TwoFactorAuthentication" style="font-size:20px;@ManageNavPages.TwoFactorAuthenticationNavStyle(ViewContext)">Two-factor authentication</a>
+    </li>
+    <li class="@ManageNavPages.PersonalDataNavClass(ViewContext)" style="@ManageNavPages.PersonalDataNavStyle(ViewContext)">
+        <a asp-page="./PersonalData" style="font-size:20px;@ManageNavPages.PersonalDataNavStyle(ViewContext)">Personal data</a>
+    </li>
+</ul>

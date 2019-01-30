@@ -1,0 +1,88 @@
+﻿@page
+@model ApplicationMenusDeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Application Menu</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.MenuCaption)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.MenuCaption)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.Icon)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.Icon)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.AreaName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.AreaName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.FolderName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.FolderName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.PageName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.PageName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.Position)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationMenu.Position)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.IsDefault)
+        </dt>
+        <dd>
+            <label class="switch switch-pill switch-text switch-primary">
+                <input asp-for="ApplicationMenu.IsDefault" type="checkbox" class="switch-input">
+                <span class="switch-label" data-on="On" data-off="Off"></span>
+                <span class="switch-handle"></span>
+            </label>
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationMenu.Parent)
+        </dt>
+        <dd>
+            <select disabled class="form-control" asp-for="ApplicationMenu.ParentId" asp-items="@((List<SelectListItem>)ViewData["AvailableMenus"])">
+                <option value="">Pick one</option>
+            </select>
+        </dd>
+    </dl>
+
+    <form method="post">
+        <input type="hidden" asp-for="ApplicationMenu.Id" />
+        <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,35 @@
+﻿@{
+    List<AttachmentViewModel> attachments = new List<AttachmentViewModel>();
+    if (ViewData["Attachments"] != null)
+    {
+        attachments = (List<AttachmentViewModel>)ViewData["Attachments"];
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <span>File Name</span>
+            </th>
+            <th>
+                <span>Size</span>
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (attachments != null)
+        {
+            foreach (var attachment in attachments)
+            {
+                <tr>
+                    <td>@attachment.FileName</td>
+                    <td>@attachment.Size</td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,49 @@
+﻿@page
+@model RMACasesIndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-page="RMACaseCreate">Create NJew</a>
+</p>
+
+<table id="sortable" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].CustomerPartNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].WarrantyStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].PartNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].RMALocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].Remark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].RMACaseStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMACases[0].RMAStages.Count)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+</table> 

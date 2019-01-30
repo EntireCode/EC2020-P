@@ -1,0 +1,96 @@
+﻿@page
+@model ApplicationUsersEditModel
+@{
+    ViewData["Title"] = "Edit";
+    var data = Model.ApplicationUser.FirstName;
+}
+
+<h2>Edit</h2>
+
+<h4>Application User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.FirstName" class="control-label"></label>
+                <input asp-for="ApplicationUser.FirstName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.LastName" class="control-label"></label>
+                <input asp-for="ApplicationUser.LastName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.LastName" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="ApplicationUser.Id" />
+            <div class="form-group">
+                <label asp-for="ApplicationUser.UserName" class="control-label"></label>
+                <input asp-for="ApplicationUser.UserName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.Email" class="control-label"></label>
+                <input asp-for="ApplicationUser.Email" class="form-control" />
+                <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.EmailConfirmed" class="control-label"></label>
+                <label class="switch switch-pill switch-text switch-primary">
+                    <input asp-for="ApplicationUser.EmailConfirmed" type="checkbox" class="switch-input">
+                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                    <span class="switch-handle"></span>
+                </label>
+                <span asp-validation-for="ApplicationUser.EmailConfirmed" class="text-danger"></span>
+                @*<div class="checkbox">
+            <label>
+                <input asp-for="ApplicationUser.EmailConfirmed" />
+            </label>
+        </div>*@
+            </div>
+            <div class="form-group">
+                <label class="control-label">Roles Assigned</label>
+                <div class="cpl-md-offset-2 col-md-10">
+                    <table>
+                        @{
+                            int cnt = 0;
+                            foreach (var role in Model.AssignedRolesDataList)
+                            {
+                                @:<tr>
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    <td>
+                                        <label class="switch switch-pill switch-text switch-primary">
+                                            <input name="selectedRoles" value="@role.Id" type="checkbox" class="switch-input" @(Html.Raw(role.Assigned ? "checked=\"checked\"" : ""))>
+                                            <span class="switch-label" data-on="On" data-off="Off"></span>
+                                            <span class="switch-handle"></span>
+                                        </label>
+                                        @cnt : @role.Name
+                                        @*<input type="checkbox"
+                                                name="selectedRoles"
+                                                value="@role.Id"
+                                                @(Html.Raw(role.Assigned ? "checked=\"checked\"" : "")) />
+                                        @cnt : @role.Name*@
+                                    </td>
+                                @:</tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-outline-primary btn-sm" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./ApplicationUsersIndex">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

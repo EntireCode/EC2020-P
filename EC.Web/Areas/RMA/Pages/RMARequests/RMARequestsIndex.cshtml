@@ -1,0 +1,152 @@
+﻿@page
+@model RMARequestsIndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>RMA Requests List</h2>
+
+<p>
+    <a asp-page="RMARequestCreate">Create New</a>
+</p>
+
+<table id="sortable" class="table table-hover table-bordered table-striped nowrap">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th hidden>
+                @Html.DisplayNameFor(model => model.RMARequests[0].Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].RMANumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].RMAIssueDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].SubmittedDate)
+            </th>
+            <th>
+                Submitted By
+            </th>
+            <th>
+                Customer Id
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].CustomerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].CustomerContact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].CustomerContactEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].PartSerialNumbers)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].DefectPhenomenon)
+            </th>
+            <th>
+                Sales Person
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].Remark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RMARequests[0].RMAReport)
+            </th>
+            <th>
+                Number of Cases
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RMARequests)
+        {
+        <tr>
+            <td>
+                <a asp-page="./RMARequestEdit" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-pencil icons font-sm d-block mt-sm-2"></i></a>
+                <a asp-page="./RMARequestDetails" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-magnifier icons font-sm d-block mt-sm-2"></i></a>
+                <a asp-page="./RMARequestDelete" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-trash icons font-sm d-block mt-sm-2"></i></a>
+            </td>
+            <td hidden>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RMANumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RMAIssueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmittedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmittedByUser.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerERPId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerContact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerContactEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PartSerialNumbers)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefectPhenomenon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalesPersonUserId)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RMAReport)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RMACases.Count)
+            </td>
+            <td>
+                <a asp-page="./RMARequestEdit" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-pencil icons font-sm d-block mt-sm-2"></i></a>
+                <a asp-page="./RMARequestDetails" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-magnifier icons font-sm d-block mt-sm-2"></i></a>
+                <a asp-page="./RMARequestDelete" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-trash icons font-sm d-block mt-sm-2"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#sortable').DataTable({
+                'scrollX': true
+            });
+        });
+    </script>
+}

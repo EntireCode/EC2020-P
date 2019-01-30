@@ -1,0 +1,145 @@
+﻿var today = new Date();
+        var fileName = '{fileName}-' + today.toISOString().substring(0, 10); 
+        var idioma =
+        {
+            "sProcessing": "Processing...",
+            "sLengthMenu": "To show _MENU_ registros",
+            "sZeroRecords": "No results found",
+            "sEmptyTable": "No data available in this table",
+            "sInfo": "Showing records from _START_ to _END_ of a total of _TOTAL_ records",
+            "sInfoEmpty": "Showing records from 0 to 0 of a total of 0 records",
+            "sInfoFiltered": "(filtering a total of _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Search for:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Loading...",
+            "oPaginate": {
+                "sFirst": "First",
+                "sLast": "Last",
+                "sNext": "Next",
+                "sPrevious": "Previous"
+            },
+            "oAria": {
+                "sSortAscending": ": Sort as ascending",
+                "sSortDescending": ": Sort as descending order"
+            },
+            "buttons": {
+                "copyTitle": 'Copied information',
+                "copyKeys": 'Use your keyboard or menu to select the copy command',
+                "copySuccess": {
+                    "_": '%d rows copied to clipboard',
+                    "1": '1 row copied to clipboard'
+                },
+
+                "pageLength": {
+                    "_": "To show %d rows",
+                    "-1": "Show everything"
+                }
+            }
+        };
+        $(document).ready(function () {
+            $('#{tableId}').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "language": idioma,
+                "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "Show everything"]],
+                dom: 'Bfrt<"col-md-6 inline"i> <"col-md-6 inline"p>',
+                buttons: {
+                    dom: {
+                        container: {
+                            tag: 'div',
+                            className: 'flexcontent'
+                        },
+                        buttonLiner: {
+                            tag: null
+                        }
+                    },
+                    buttons: [
+                        {
+                            extend: 'copyHtml5',
+                            text: '<i class="fa fa-clipboard"></i>Copy',
+                            title: fileName,
+                            titleAttr: 'Copy',
+                            className: 'btn btn-app export barras',
+                            exportOptions: {
+                                columns: {columnsArray}
+                            }
+                        },
+
+                        {
+                            extend: 'pdfHtml5',
+                            text: '<i class="fa fa-file-pdf-o"></i>PDF',
+                            title: fileName,
+                            titleAttr: 'PDF',
+                            className: 'btn btn-app export pdf',
+                            exportOptions: {
+                                columns: {columnsArray}
+                            },
+                            customize: function (doc) {
+
+                                doc.styles.title = {
+                                    color: '#4c8aa0',
+                                    fontSize: '30',
+                                    alignment: 'center'
+                                }
+                                doc.styles['td:nth-child(2)'] = {
+                                    width: '100px',
+                                    'max-width': '100px'
+                                },
+                                    doc.styles.tableHeader = {
+                                        fillColor: '#4c8aa0',
+                                        color: 'white',
+                                        alignment: 'center'
+                                    },
+                                    doc.content[1].margin = [100, 0, 100, 0]
+
+                            }
+
+                        },
+
+                        {
+                            extend: 'excelHtml5',
+                            text: '<i class="fa fa-file-excel-o"></i>Excel',
+                            title: fileName,
+                            titleAttr: 'Excel',
+                            className: 'btn btn-app export excel',
+                            exportOptions: {
+                                columns: {columnsArray}
+                            },
+                        },
+                        {
+                            extend: 'csvHtml5',
+                            text: '<i class="fa fa-file-text-o"></i>CSV',
+                            title: fileName,
+                            titleAttr: 'CSV',
+                            className: 'btn btn-app export csv',
+                            exportOptions: {
+                                columns: {columnsArray}
+                            }
+                        },
+                        {
+                            extend: 'print',
+                            text: '<i class="fa fa-print"></i>Print',
+                            title: fileName,
+                            titleAttr: 'Imprimir',
+                            className: 'btn btn-app export imprimir',
+                            exportOptions: {
+                                columns: {columnsArray}
+                            }
+                        },
+                        {
+                            extend: 'pageLength',
+                            titleAttr: 'Records to show',
+                            className: 'selectTable'
+                        }
+                    ]
+
+
+                }
+            });
+        });

@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using EC.Web.ViewModels.Base;
+@using EC.Web.Services.Alert;
+
+@{
+    var alert = TempData.Get<AlertViewModel>("alert");
+    @*var type = (string)TempData["_alert.type"];
+    var title = (string)TempData["_alert.title"];
+    var body = (string)TempData["_alert.body"];
+    *@
+}
+<div class="alert-container">
+    @if (alert != null)
+    {
+        <div class="alert alert-@alert.AlertType alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>@alert.AlertTitle</strong> @alert.AlertBody
+        </div>
+    }
+</div>
+@*<div class="alert-container">
+    @if (!string.IsNullOrEmpty(type))
+    {
+        <div class="alert alert-@type alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>@title</strong> @body
+        </div>
+    }
+</div>*@

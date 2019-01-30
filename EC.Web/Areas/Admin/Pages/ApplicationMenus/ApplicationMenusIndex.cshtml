@@ -1,0 +1,103 @@
+﻿@page
+@model ApplicationMenusIndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>Application Menus List</h2>
+
+<p>
+    <a asp-page="ApplicationMenusCreate">Create New</a>
+</p>
+<table id="sortable" class="table table-hover table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].MenuCaption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].Icon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].AreaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].FolderName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].PageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].IsDefault)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationMenus[0].Parent)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ApplicationMenus)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MenuCaption)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Icon)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AreaName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FolderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                </td>
+                <td valign="middle">
+                    <label class="switch switch-pill switch-text switch-primary">
+                        <input type="checkbox" class="switch-input" @(Html.Raw(item.IsDefault ? "checked=\" checked\"" : ""))>
+                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                        <span class="switch-handle"></span>
+                    </label>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Parent.Name)
+                </td>
+                <td>
+                    <a asp-page="./ApplicationMenusEdit" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-pencil icons font-sm d-block mt-sm-2"></i></a>
+                    <a asp-page="./ApplicationMenusDetails" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-magnifier icons font-sm d-block mt-sm-2"></i></a>
+                    <a asp-page="./ApplicationMenusDelete" asp-route-id="@item.Id" class="btn btn-default btn-sm"><i class="icon-trash icons font-sm d-block mt-sm-2"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sortable').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,85 @@
+﻿@page
+@model ApplicationMenusEditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Application Menu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ApplicationMenu.Id" />
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.Name" class="control-label"></label>
+                <input asp-for="ApplicationMenu.Name" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.Description" class="control-label"></label>
+                <input asp-for="ApplicationMenu.Description" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.MenuCaption" class="control-label"></label>
+                <input asp-for="ApplicationMenu.MenuCaption" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.MenuCaption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.Icon" class="control-label"></label>
+                <input asp-for="ApplicationMenu.Icon" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.Icon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.AreaName" class="control-label"></label>
+                <input asp-for="ApplicationMenu.AreaName" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.AreaName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.FolderName" class="control-label"></label>
+                <input asp-for="ApplicationMenu.FolderName" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.FolderName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.PageName" class="control-label"></label>
+                <input asp-for="ApplicationMenu.PageName" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.PageName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.Position" class="control-label"></label>
+                <input asp-for="ApplicationMenu.Position" class="form-control" />
+                <span asp-validation-for="ApplicationMenu.Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.IsDefault" class="control-label"></label>
+                <label class="switch switch-pill switch-text switch-primary">
+                    <input asp-for="ApplicationMenu.IsDefault" type="checkbox" class="switch-input">
+                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                    <span class="switch-handle"></span>
+                </label>
+                <span asp-validation-for="ApplicationMenu.IsDefault" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationMenu.Parent" class="control-label"></label>
+                <select class="form-control" asp-for="ApplicationMenu.ParentId" asp-items="@((List<SelectListItem>)ViewData["AvailableMenus"])">
+                    <option value="">Pick one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-outline-primary btn-sm" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

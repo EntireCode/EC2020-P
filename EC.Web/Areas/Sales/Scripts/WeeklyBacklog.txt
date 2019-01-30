@@ -1,0 +1,102 @@
+﻿Select v999.*, Notes=(Case when ocrd.Notes like '%split%' then Right(Notes,15) else '' end)
+From
+(
+SELECT ALL OrdDate=T0.[TaxDate]
+, SO#=T0.DocNum
+, T1.ShipDate
+, Sales= Substring(u1.Descr,1, 18)
+, InsideSales=T2.[FirstName]  
+, Rep = (Case when substring(P0.Slpname, 1,2) = '00' then 'House'
+			when substring(P0.Slpname, 1,2) = '01' then 'ArkCo'
+			when substring(P0.Slpname, 1,2) = '02' then 'POE Web'
+			when substring(P0.Slpname, 1,2) = '05' then 'SCS'
+			when substring(P0.Slpname, 1,2) = '11' then 'Glen'
+			when substring(P0.Slpname, 1,2) = '13' then 'Hofstetter'
+			when substring(P0.Slpname, 1,2) = '15' then 'Harwood'
+			when substring(P0.Slpname, 1,2) = '20' then 'Halbar'
+			when substring(P0.Slpname, 1,2) = '22' then 'TGS'
+			when substring(P0.Slpname, 1,2) = '23' then 'Intelliglink'
+			when substring(P0.Slpname, 1,2) = '41' then 'Eagle Sales'			
+			when substring(P0.Slpname, 1,2) = '42' then 'Watters'			
+			when substring(P0.Slpname, 1,2) = '43' then 'Conquest'			
+			when substring(P0.Slpname, 1,2) = '45' then 'Interal'			
+			when substring(P0.Slpname, 1,2) = '48' then 'Alliance'			
+			when substring(P0.Slpname, 1,2) = '49' then 'JLT' Else 'House/Disty' end)	
+, RepComm = p0.commission
+, Customer=T0.CardCode
+, CustPO#=Left(T0.NumAtCard,22)
+, Ln=T1.Linenum+1
+, Model#=Left(T1.Dscription,30)
+, OpenQty = Convert(int,T1.OpenQty)
+, Price$ = T1.Price
+, OpenAmt = T1.OpenQty * T1.Price
+FROM ORDR T0 
+left outer join OHEM T2 on  T2.empid = T0.ownercode 
+left outer join RDR1 T1 on T1.docEntry = T0.Docentry
+left outer join OSHP T3 on T3.TrnspCode = T0.TrnspCode
+left outer join oslp p0 on p0.slpcode = T0.slpcode
+left outer join DLN1 T4 on T4.TrgetEntry = T1.DocEntry 
+                           and T4.TargetType = '13' and T1.BaseType = '15' and T4.linenum = T1.BaseLine
+left outer join UFD1 u1 on u1.TableID = 'OCRD' and u1.FieldID = 0 and u1.FldValue = T0.u_salesmanager
+WHERE T0.canceled = 'N'  
+and DateDiff(dd,T0.TaxDate, getdate()) >=0  and T1.Linestatus = 'O'
+and T0.u_salesmanager = '{salesManager}'
+
+union
+
+select OrdDate=max(OrdDate), SO#=count(SO#), max(ShipDate),
+	Sales=' BOs Total:' , InsideSales='',Rep='',
+	RepComm = 0,
+	Customer = ' ', 
+	CustPO# = ' ', 
+	Ln=1,
+	Model = ' ' , 
+	OpenQty = sum(OpenQty), 
+	Price$=sum(ExtAmt$) / sum(OpenQty), 
+	ExtAmt$ = sum(ExtAmt$)
+FROM 
+(
+SELECT OrdDate=T0.[TaxDate]
+, ShipVia= T3.TrnspName + '-'+ T0.[U_IncoTerm]+T0.[U_IncoPoint]
+, SO#=T0.[DocNum]
+, Sales=T0.u_salesmanager
+, InsideSales=T2.[FirstName]  
+, Rep = (Case when substring(P0.Slpname, 1,2) = '00' then 'House'
+			when substring(P0.Slpname, 1,2) = '01' then 'ArkCo'
+			when substring(P0.Slpname, 1,2) = '02' then 'POE Web'
+			when substring(P0.Slpname, 1,2) = '05' then 'SCS'
+			when substring(P0.Slpname, 1,2) = '11' then 'Glen'
+			when substring(P0.Slpname, 1,2) = '13' then 'Hofstetter'
+			when substring(P0.Slpname, 1,2) = '15' then 'Harwood'
+			when substring(P0.Slpname, 1,2) = '20' then 'Halbar'
+			when substring(P0.Slpname, 1,2) = '22' then 'TGS'
+			when substring(P0.Slpname, 1,2) = '23' then 'Intelliglink'
+			when substring(P0.Slpname, 1,2) = '41' then 'Eagle Sales'			
+			when substring(P0.Slpname, 1,2) = '42' then 'Watters'			
+			when substring(P0.Slpname, 1,2) = '43' then 'Conquest'			
+			when substring(P0.Slpname, 1,2) = '45' then 'Interal'			
+			when substring(P0.Slpname, 1,2) = '48' then 'Alliance'			
+			when substring(P0.Slpname, 1,2) = '49' then 'JLT' end)	
+, RepComm = p0.commission
+, Customer=T0.CardCode
+, CustPO#=Left(T0.NumAtCard,22)
+, Model#=Left(T1.Dscription,30)
+, OpenQty = Convert(int,T1.OpenQty)
+, Price$ = T1.Price
+, ExtAmt$ = T1.OpenQty * T1.Price
+, T1.ShipDate
+FROM ORDR T0 
+left outer join OHEM T2 on  T2.empid = T0.ownercode 
+left outer join RDR1 T1 on T1.docEntry = T0.Docentry
+left outer join OSHP T3 on T3.TrnspCode = T0.TrnspCode
+left outer join oslp p0 on p0.slpcode = T0.slpcode
+left outer join DLN1 T4 on T4.TrgetEntry = T1.DocEntry 
+                           and T4.TargetType = '13' and T1.BaseType = '15' and T4.linenum = T1.BaseLine
+WHERE T0.canceled = 'N'  
+and DateDiff(dd,T0.TaxDate, getdate()) >=0  and T1.Linestatus = 'O' 
+and T0.u_salesmanager = '{salesManager}'
+) v1
+) v999
+Left outer join ocrd on ocrd.cardcode = v999.customer
+where v999.SO# <> 0 and OpenAmt <> 0
+order by Customer,OrdDate,SO#

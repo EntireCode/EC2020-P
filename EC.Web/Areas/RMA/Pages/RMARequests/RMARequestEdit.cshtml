@@ -1,0 +1,180 @@
+﻿@page
+@model RMARequestEditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>RMA Request</h4>
+<hr />
+<form method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RMARequest.Id" class="control-label"></label>
+                <input id="Id" asp-for="RMARequest.Id" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.SubmittedDate" class="control-label"></label>
+                <input id="SubmittedDate" asp-for="RMARequest.SubmittedDate" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.SubmittedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerName" class="control-label"></label>
+                <input id="CustomerName" asp-for="RMARequest.CustomerName" class="form-control" />
+                <span asp-validation-for="RMARequest.CustomerName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerContactEmail" class="control-label"></label>
+                <input id="CustomerContactEmail" asp-for="RMARequest.CustomerContactEmail" class="form-control" />
+                <span asp-validation-for="RMARequest.CustomerContactEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.DefectPhenomenon" class="control-label"></label>
+                <textarea id="DefectPhenomenon" asp-for="RMARequest.DefectPhenomenon" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="RMARequest.DefectPhenomenon" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.RMANumber" class="control-label"></label>
+                <input id="RMANumber" asp-for="RMARequest.RMANumber" class="form-control" />
+
+                <span asp-validation-for="RMARequest.RMANumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">RMA Number Issued By</label>
+                <input asp-for="RMARequest.RMANumberIssuedByUser.Email" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.RMANumberIssuedByUser.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.Status" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMARequest.Status, Model.RMAStatuses, new { @class = "form-control", @id = "Status", @disabled = "" })
+                <span asp-validation-for="RMARequest.Status" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RMARequest.RMAReport" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMARequest.RMAReport, Model.RMAReports, new { @class = "form-control", @id = "RMAReport" })
+                <span asp-validation-for="RMARequest.RMAReport" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">Submitted By</label>
+                <input asp-for="RMARequest.SubmittedByUser.Email" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.SubmittedByUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerERPId" class="control-label"></label>
+                <input id="CustomerERPId" asp-for="RMARequest.CustomerERPId" class="form-control" />
+                <span asp-validation-for="RMARequest.CustomerERPId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.CustomerContact" class="control-label"></label>
+                <input id="CustomerContact" asp-for="RMARequest.CustomerContact" class="form-control" />
+                <span asp-validation-for="RMARequest.CustomerContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.InvoiceNumber" class="control-label"></label>
+                <input id="InvoiceNumber" asp-for="RMARequest.InvoiceNumber" class="form-control" />
+                <span asp-validation-for="RMARequest.InvoiceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sales Person</label>
+                <select id="SalesPersonUserId" class="form-control" asp-for="RMARequest.SalesPersonUserId" asp-items="@Model.SalesPersons">
+                    <option value="">Pick one</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.RMAIssueDate" class="control-label"></label>
+                <input id="RMAIssueDate" asp-for="RMARequest.RMAIssueDate" class="form-control ui-datepicker" />
+                <span asp-validation-for="RMARequest.RMAIssueDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.Remark" class="control-label"></label>
+                <textarea id="Remark" asp-for="RMARequest.Remark" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="RMARequest.Remark" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMARequest.RMAClosedDate" class="control-label"></label>
+                <input id="Remark" asp-for="RMARequest.RMAClosedDate" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.RMAClosedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">RMA Closed By</label>
+                <input asp-for="RMARequest.RMAClosedByUser.Email" class="form-control" readonly />
+                <span asp-validation-for="RMARequest.RMAClosedByUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button id="saveRequest" type="submit" class="btn btn-primary">Save Request</button>
+                @*<input type="submit" value="Update" class="btn btn-outline-primary btn-sm" />*@
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-1">
+            <label class="control-label">Model Number</label>
+        </div>
+        <div class="form-group col-md-4">
+            <input id="PartNumber" class="form-control" />
+        </div>
+        <div class="form-group col-md-1">
+            <label class="control-label">Serial Number</label>
+        </div>
+        <div class="form-group col-md-4">
+            <input id="SerialNumber" class="form-control" />
+        </div>
+        <div class="form-group col-md-2">
+            <a id="addToList" class="btn btn-primary">Add</a>
+        </div>
+    </div>
+    <table id="detailsTable" class="table table-striped table-hover table-bordered dt-responsive nowrap">
+        <thead>            
+            <tr>
+                <th style="width:10%">Model No</th>
+                <th style="width:10%">Serial No</th>
+                <th style="width:5%"></th>
+            </tr>            
+        </thead>
+        <tbody>
+            @foreach (var item in Model.RMARequest.RMARequestItems)
+            {
+            <tr>
+                <td style="width:10%">@item.PartNumber</td>
+                <td style="width:10%">@item.SerialNumber</td>
+                <td style="width:5%">
+                    <a data-itemId="0" href="#" class="deleteItem">Remove</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</form>
+<div class="row">
+    <div class="col-md-4">
+        <button id="AssignRMANumber" class="btn btn-dark" @(Model.RMARequest.RMANumber == null ? "" : "disabled")>Assign RMA#</button>
+        <a class="btn btn-primary" asp-page="./RMACases" asp-route-id="@Model.RMARequest.Id">Cases (@Model.RMARequest.RMACases.Count)</a>
+        @if (Model.RMARequest.RMANumber != null)
+        {
+            <button id="CloseRMA" class="btn btn-danger" @(Model.RMARequest.Status == RMAStatus.Closed ? "disabled" : "")>Close RMA</button>
+        }
+        <a class="btn btn-dark" asp-page="./Index">Back to List</a>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/RMA/rmaRequestEdit.js"></script>
+}
+

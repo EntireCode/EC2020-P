@@ -1,0 +1,223 @@
+﻿@page
+@model RMAStagesModel
+@{
+}
+<span class="fa fa-plus-square" data-toggle="collapse" data-target="#demo"></span>
+<div id="RMACase" class="form-group">
+    <div class="row">
+        <div class="col-md-1">
+            <label class="control-label">RMA Case Id</label>
+        </div>
+        <div class="col-md-5">
+            <input class="form-control" id="RMACaseId" asp-for="RMACase.Id" readonly />
+        </div>
+        <div class="col-md-1">
+            <label class="control-label">Model Number</label>
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" id="PartNumber" asp-for="RMACase.PartNumber" readonly />
+        </div>
+        <div class="col-md-1">
+            <label class="control-label">Quantity</label>
+        </div>
+        <div class="col-md-2">
+            <input class="form-control" id="Quantity" asp-for="RMACase.Quantity" readonly />
+        </div>
+        
+    </div>    
+</div>
+<div id="demo" class="collapse">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RMACase.Id" class="control-label"></label>
+                <input id="RMARequestId" asp-for="RMACase.Id" class="form-control" readonly />
+                <span asp-validation-for="RMACase.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMACase.InvoiceNumber" class="control-label"></label>
+                <input asp-for="RMACase.InvoiceNumber" class="form-control" readonly />
+                <span asp-validation-for="RMACase.InvoiceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMACase.Quantity" class="control-label"></label>
+                <input asp-for="RMACase.Quantity" class="form-control" readonly />
+                <span asp-validation-for="RMACase.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMACase.Remark" class="control-label"></label>
+                <input asp-for="RMACase.Remark" class="form-control" readonly />
+                <span asp-validation-for="RMACase.Remark" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="RMACase.RMARequestId" class="control-label"></label>
+                <input asp-for="RMACase.RMARequestId" class="form-control" readonly />
+                <span asp-validation-for="RMACase.RMARequestId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="RMACase.CustomerPartNumber" class="control-label"></label>
+                <input asp-for="RMACase.CustomerPartNumber" class="form-control" readonly />
+                <span asp-validation-for="RMACase.CustomerPartNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMACase.PartNumber" class="control-label"></label>
+                <input asp-for="RMACase.PartNumber" class="form-control" readonly />
+                <span asp-validation-for="RMACase.PartNumber" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <label asp-for="RMACase.RMACaseStatus" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMACase.RMACaseStatus, Model.RMACaseStatuses, new { @class = "form-control", @id = "Status", @disabled = "" })
+                <span asp-validation-for="RMACase.RMACaseStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMACase.RMALocation" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMACase.RMALocation, Model.RMALocations, new { @class = "form-control", @id = "Status", @disabled = "" })
+                <span asp-validation-for="RMACase.RMALocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RMACase.WarrantyStatus" class="control-label"></label>
+                @Html.DropDownListFor(model => model.RMACase.WarrantyStatus, Model.WarrantyStatuses, new { @class = "form-control", @id = "Status", @disabled = "" })
+                <span asp-validation-for="RMACase.WarrantyStatus" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <form id="newCase">
+        @Html.AntiForgeryToken()
+        <div>
+            @*Stage Details*@
+            <fieldset>
+                <legend>Stage Details:</legend>
+                <h5 style="margin-top:10px;color:#ff6347">Stage Details</h5>
+                <hr />
+                <div>
+                    <div class="form-group" @((Model.RMARequestStatus == RMAStatus.Closed) ? "hidden" : "")>
+                        <div class="row">
+                            <label class="col-md-1">
+                                Serial Numbers
+                            </label>
+                            <div class="col-md-5">
+                                <textarea type="text" id="serialNumbers" name="serialNumbers" placeholder="Serial Numbers" class="form-control" rows="5"></textarea>
+                            </div>
+                            <label class="col-md-1">
+                                Note
+                            </label>
+                            <div class="col-md-5">
+                                <input type="text" id="id" name="id" placeholder="Id" hidden />
+                                <textarea id="note" name="note" placeholder="Note" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-1">
+                                Corrective Action
+                            </label>
+                            <div class="col-md-5">
+                                <select id="rmaCorrectiveAction" class="form-control">
+                                    <option value="">Pick One</option>
+                                    @foreach (var stageName in Model.RMACorrectiveActions)
+                                    {
+                                        <option value="@stageName.Value">@stageName.Text</option>
+                                    }
+                                </select>
+                            </div>
+                            <label class="col-md-1">
+                                Corrective Action Note
+                            </label>
+                            <div class="col-md-5">
+                                <textarea type="text" id="correctiveActionNote" name="correctiveActionNote" placeholder="Corrective Action Note" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-1">
+                                Is Action Done?
+                            </label>
+                            <div class="col-md-6">
+                                <label class="switch switch-pill switch-text switch-primary">
+                                    <input id="isActionDone" type="checkbox" class="switch-input">
+                                    <span class="switch-label" data-on="On" data-off="Off"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                            </div>
+                            <div class="col-md-5">
+                                <a id="addToList" class="btn btn-primary">Add To List</a>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="detailsTable" class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:15%">Corrective Action</th>
+                                <th style="width:25%">Note</th>
+                                <th style="width:20%">Serial Numbers</th>
+                                <th style="width:10%">Processed By</th>
+                                <th style="width:10%">Processed Date</th>
+                                <th style="width:5%">Done?</th>
+                                <th hidden></th>
+                                <th style="width:10%">Corrective Action Note</th>
+                                <th style="width:5%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ca in Model.RMACase.RMAStages)
+                            {
+                                <tr>
+                                    <td>@ca.CorrectiveAction</td>
+                                    <td>@ca.Note</td>
+                                    <td>@ca.SerialNumbers</td>
+                                    <td>@ca.ProcessedByUser.Email</td>
+                                    <td>@ca.ProcessedDate</td>
+                                    <td>
+                                        @if (ca.IsActionDone)
+                                        {
+                                            <label class="switch switch-pill switch-text switch-primary">
+                                                <input type="checkbox" class="switch-input" checked="checked">
+                                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                <span class="switch-handle"></span>
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="switch switch-pill switch-text switch-primary">
+                                                <input type="checkbox" class="switch-input">
+                                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                                <span class="switch-handle"></span>
+                                            </label>
+                                        }
+                                    </td>
+                                    <td>@ca.CorrectiveActionNote</td>
+                                    <td hidden>@ca.Id</td>
+                                    <td>
+                                        @if (Model.RMARequestStatus != RMAStatus.Closed)
+                                        {
+                                            <a data-itemId="0" href="#" class="deleteItem">Remove</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>                
+        </div>
+        <div>
+            <button id="saveStages" type="submit" class="btn btn-danger" @((Model.RMARequestStatus == RMAStatus.Closed) ? "disabled" : "")>Save Stages</button>
+            <a class="btn btn-primary" asp-page="./RMACases" asp-route-id="@Model.RMACase.RMARequestId">Back</a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <script src="~/js/RMA/rmaStage.js"></script>
+    <script>
+        $('.collapse').on('shown.bs.collapse', function () {
+            $(this).parent().find(".fa-plus-square").removeClass("fa-plus-square").addClass("fa-minus-square");
+            $('#RMACase').hide();
+        }).on('hidden.bs.collapse', function () {
+            $(this).parent().find(".fa-minus-square").removeClass("fa-minus-square").addClass("fa-plus-square");
+            $('#RMACase').show();
+        });
+    </script>
+}

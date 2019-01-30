@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+
+<nav class="sidebar-nav">
+    <ul class="nav">
+        @if (User.IsInRole("admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="/Admin/Dashboard"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-primary">NEW</span></a>
+            </li>
+            <li class="nav-title">
+                <i class="fa fa-cogs"></i> Settings
+            </li>
+            @await Component.InvokeAsync("SidebarNavMenu", "Security")
+        }
+
+        @*<li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-shield"></i> Security</a>
+            <ul class="nav-dropdown-items">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/ApplicationUsers"><i class="icon-user"></i> Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/ApplicationRoles"><i class="icon-lock"></i> Roles</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/ApplicationMenus"><i class="fa fa-align-left"></i> Menus</a>
+                </li>
+            </ul>
+        </li>*@
+        <!-- To hold user applications -->
+        <li class="nav-title">
+            <i class="fa fa-cubes"></i> Applications
+            @await Component.InvokeAsync("SidebarNavMenu", "Application")
+        </li>
+        
+    </ul>
+</nav>
